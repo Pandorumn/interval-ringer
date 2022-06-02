@@ -1,18 +1,18 @@
-const containerElem = document.querySelector(".time")
-const hoursElem = document.querySelector(".hours")
-const minutesElem = document.querySelector(".minutes")
-const dotsElem = document.querySelector(".dots")
-const audioElem = document.querySelector("audio")
-const iconMuted = document.querySelector(".icon-muted")
-const iconSpeaker = document.querySelector(".icon-speaker")
+var containerElem = document.querySelector(".time")
+var hoursElem = document.querySelector(".hours")
+var minutesElem = document.querySelector(".minutes")
+var dotsElem = document.querySelector(".dots")
+var audioElem = document.querySelector("audio")
+var iconMuted = document.querySelector(".icon-muted")
+var iconSpeaker = document.querySelector(".icon-speaker")
 
-const highlightedClassName = "highlighted"
-const hiddenClassName = "hidden"
+var highlightedClassName = "highlighted"
+var hiddenClassName = "hidden"
 
 dotsElem.textContent = ":"
 
 function ring() {
-  const audio = new Audio("pristine-609.mp3")
+  var audio = new Audio("pristine-609.mp3")
   audio.play()
 }
 function unmute() {
@@ -23,7 +23,7 @@ document.addEventListener("click", unmute)
 iconSpeaker.addEventListener("click", ring)
 
 function useMunitesState() {
-  let previousM = 0
+  var previousM = 0
 
   function setPreviousM(value) {
     previousM = value
@@ -32,20 +32,22 @@ function useMunitesState() {
     return previousM
   }
 
-  return { setPreviousM, getPreviousM }
+  return { setPreviousM: setPreviousM, getPreviousM: getPreviousM }
 }
 
-const { getPreviousM, setPreviousM } = useMunitesState()
+var munitesState = useMunitesState()
+var getPreviousM = munitesState.getPreviousM
+var setPreviousM = munitesState.setPreviousM
 
-setInterval(() => {
-  const h = new Date().getHours()
-  const m = new Date().getMinutes()
+function run() {
+  var h = new Date().getHours()
+  var m = new Date().getMinutes()
 
   hoursElem.textContent = h
   minutesElem.textContent = m < 10 ? "0" + m : m
 
-  const isTimeToRing = !(m % 20)
-  const isRinged = !(getPreviousM() % 20)
+  var isTimeToRing = !(m % 20)
+  var isRinged = !(getPreviousM() % 20)
 
   setPreviousM(m)
 
@@ -55,4 +57,6 @@ setInterval(() => {
   } else {
     containerElem.classList.remove(highlightedClassName)
   }
-}, 100)
+}
+
+setInterval(run, 100)
