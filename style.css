@@ -1,0 +1,25 @@
+body {
+  min-height: 100vh;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1.5rem;
+  background: #2e2e2e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time {
+  font-size: 7rem;
+  font-family: sans-serif;
+  color: #ccc;
+  text-align: center;
+  font-family: "Righteous";
+  display: flex;
+  align-items: center;
+  column-gap: 0.75rem;
+}
+
+.highlighted {
+  color: #3b88da;
+}
