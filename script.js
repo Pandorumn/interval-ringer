@@ -2,25 +2,34 @@ var containerElem = document.querySelector(".time")
 var hoursElem = document.querySelector(".hours")
 var minutesElem = document.querySelector(".minutes")
 var dotsElem = document.querySelector(".dots")
-var audioElem = document.querySelector("audio")
 var iconMuted = document.querySelector(".icon-muted")
 var iconSpeaker = document.querySelector(".icon-speaker")
+var volumeSlider = document.querySelector(".slider")
 
 var highlightedClassName = "highlighted"
 var hiddenClassName = "hidden"
 
 dotsElem.textContent = ":"
 
+var volume = 0.5
+
 function ring() {
   var audio = new Audio("pristine-609.mp3")
+  audio.volume = volume
   audio.play()
 }
 function unmute() {
   iconMuted.classList.add(hiddenClassName)
   iconSpeaker.classList.remove(hiddenClassName)
+  ring()
+  document.removeEventListener("click", unmute)
+}
+function onVolumeChange(e) {
+  volume = e.target.value / 100
 }
 document.addEventListener("click", unmute)
 iconSpeaker.addEventListener("click", ring)
+volumeSlider.addEventListener("change", onVolumeChange)
 
 function useMunitesState() {
   var previousM = 0
